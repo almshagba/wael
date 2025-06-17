@@ -8,7 +8,6 @@ import os
 from werkzeug.utils import secure_filename
 from constants import JOB_TITLES, DIRECTORATE_JOB_TITLES, DIRECTORATE_DEPARTMENTS
 from io import BytesIO
-import pandas as pd
 from routes.auth_routes import admin_required
 from .auth_routes import permission_required
 from routes.auth_routes import login_required, permission_required
