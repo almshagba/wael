@@ -2,7 +2,6 @@ from flask import Blueprint, session, redirect, url_for, make_response, request
 from database import db
 from models import Employee, Leave, LeaveBalance, ConvertedDeparture, MonthlyDepartureBalance, School
 from datetime import datetime
-import pandas as pd
 from io import BytesIO
 from urllib.parse import quote
 from routes.auth_routes import admin_required, login_required, permission_required
