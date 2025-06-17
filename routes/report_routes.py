@@ -3,7 +3,6 @@ from database import db
 from models import Employee, School, Transfer, User, FormTemplate, Leave, TechnicalDeficiency
 from datetime import datetime
 from sqlalchemy import func, and_, or_
-import pandas as pd
 from io import BytesIO
 from routes.auth_routes import admin_required
 from constants import JOB_TITLES, DIRECTORATE_DEPARTMENTS
