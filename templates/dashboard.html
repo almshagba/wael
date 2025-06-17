@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">لوحة التحكم</h1>
+    </div>
+</div>
+
+<div class="row">
+    <!-- إحصائيات الموظفين -->
+    <div class="col-md-4 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title">الموظفين</h5>
+                        <h2 class="display-4">{{ employees_count }}</h2>
+                    </div>
+                    <i class="fas fa-users fa-3x"></i>
+                </div>
+                <a href="{{ url_for('employee.employees') }}" class="text-white">عرض التفاصيل <i class="fas fa-arrow-circle-left"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- إحصائيات المدارس -->
+    <div class="col-md-4 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title">المدارس</h5>
+                        <h2 class="display-4">{{ schools_count }}</h2>
+                    </div>
+                    <i class="fas fa-school fa-3x"></i>
+                </div>
+                <a href="{{ url_for('school.schools') }}" class="text-white">عرض التفاصيل <i class="fas fa-arrow-circle-left"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- إحصائيات النقل -->
+    <div class="col-md-4 mb-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title">عمليات النقل</h5>
+                        <h2 class="display-4">{{ transfers_count }}</h2>
+                    </div>
+                    <i class="fas fa-exchange-alt fa-3x"></i>
+                </div>
+                <a href="{{ url_for('main.transfers_list') }}" class="text-white">عرض التفاصيل <i class="fas fa-arrow-circle-left"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">روابط سريعة</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{{ url_for('employee.add_employee') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-user-plus me-2"></i> إضافة موظف جديد
+                    </a>
+                    <a href="{{ url_for('school.add_school') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-plus-circle me-2"></i> إضافة مدرسة جديدة
+                    </a>
+                    <a href="{{ url_for('main.add_transfer') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-exchange-alt me-2"></i> تسجيل نقل جديد
+                    </a>
+                    <!-- احذف هذه الأسطر -->
+                    
+                        <i class="fas fa-chart-bar me-2"></i> عرض التقارير
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">التقارير السريعة</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <!-- Report links completely removed -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طباعة نقل فردي</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #000;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 18px;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        
+        .header h2 {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        
+        .header h3 {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        
+        .recipient {
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .subject {
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .content {
+            text-align: justify;
+            margin: 20px 0;
+            line-height: 2;
+        }
+        
+        .content p {
+            margin: 15px 0;
+        }
+        
+        .signature-section {
+            margin-top: 80px;
+            text-align: left;
+        }
+        
+        .copies {
+            margin-top: 60px;
+            text-align: right;
+        }
+        
+        .copies p {
+            margin: 5px 0;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .print-button:hover {
+            background: #0056b3;
+        }
+        
+        @media print {
+            body {
+                margin: 0;
+                padding: 15px;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button no-print" onclick="window.print()">طباعة</button>
+    
+    <div class="header">
+        <div style="text-align: center; margin-bottom: 10px;">
+            <div style="display: inline-block; margin-bottom: 10px;">
+                <div style="font-size: 14px; margin-bottom: 5px;">بسم الله الرحمن الرحيم</div>
+                <img src="{{ url_for('static', filename='images/jordan_coat_of_arms.png') }}" alt="شعار المملكة الأردنية الهاشمية" style="height: 80px; margin: 10px 0;">
+            </div>
+        </div>
+        <h3>مديرية التربية والتعليم لمنطقة الزرقاء الثانية</h3>
+    </div>
+    
+    <div class="recipient">
+        {% if transfer.from_school.gender == 'إناث' %}مديرة{% else %}مدير{% endif %} {{ transfer.from_school.name }}
+    </div>
+    
+    <div class="subject">
+        الموضوع: {{ transfer.employee.job_title }}/{{ transfer.employee.name }}/{{ transfer.employee.qualification }} 
+        ({% if transfer.employee.qualification == 'بكالوريوس' %}{{ transfer.employee.bachelor_specialization }}{% elif transfer.employee.qualification == 'ماجستير' %}{{ transfer.employee.masters_specialization }}{% elif transfer.employee.qualification == 'دكتوراه' %}{{ transfer.employee.phd_specialization }}{% elif transfer.employee.qualification == 'دبلوم عالي' %}{{ transfer.employee.high_diploma_specialization }}{% else %}{{ transfer.employee.bachelor_specialization }}{% endif %}).({{ transfer.employee.ministry_number }})<br>
+        والنقل الداخلي
+    </div>
+    
+    <div class="content">
+        <p>السلام عليكم ورحمة الله وبرفعاته ،،،</p>
+        
+        <p>فاستناداً لأحكام المادة (43/أ/1) من نظام إدارة الموارد البشرية في القطاع العام رقم (33) لسنة 2024 وتعديلاته والبند (سادساً/2) للصلاحيات المفوضة إلى من قبل معالي وزير التربية والتعليم في كتابه رقم (1/70/31079) تاريخ 11/7/2024 وبناءً على تنسيب مدير الشؤون الإدارية والمالية،</p>
+        
+        <p>قررت نقل المذكور{{ transfer.employee.gender == 'أنثى' and 'ة' or '' }} أعلاه من مركز عمل{{ transfer.employee.gender == 'أنثى' and 'ها' or 'ه' }} الحالي في ({{ transfer.from_school.name }}) إلى ({{ transfer.to_school.name }}) اعتباراً من تاريخه.</p>
+        
+        <p>راجياً إبلاغ{{ transfer.employee.gender == 'أنثى' and 'ها' or 'ه' }} بتسليم ما بعهدت{{ transfer.employee.gender == 'أنثى' and 'ها' or 'ه' }} ومباشرة عمل{{ transfer.employee.gender == 'أنثى' and 'ها' or 'ه' }} الجديد بعد الحصول على براءة الذمة اللازمة وحسب الأصول.</p>
+        
+        <p>واقبلوا الاحترام ،</p>
+    </div>
+    
+    <div class="signature-section">
+        <p style="text-align: left; margin-top: 50px; font-size: 18px; font-weight: bold; margin-bottom: 5px;">
+            مدير التربية والتعليم
+        </p>
+    </div>
+    
+    <div class="copies">
+        <p>نسخة / مدير الشؤون الإدارية والمالية</p>
+        <p>نسخة / رئيس قسم شؤون الموظفين</p>
+        <p>نسخة / {% if transfer.to_school.gender == 'إناث' %}مديرة{% else %}مدير{% endif %} {{ transfer.to_school.name }}</p>
+        <p>نسخة / الديوان</p>
+    </div>
+</body>
+</html>
+    

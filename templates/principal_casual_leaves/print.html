@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طباعة الإجازة العرضية لمدير مدرسة</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #000;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .header-text {
+            text-align: center;
+            margin-bottom: 7px;
+        }
+        
+        .header-text p {
+            margin: 2px 0;
+            font-size: 14px;
+        }
+        
+        .document-info {
+            position: absolute;
+            top: 120px;
+            right: 20px;
+            text-align: right;
+            font-size: 10px;
+        }
+        
+        .document-info p {
+            margin: 12px 0;
+            display: flex;
+            justify-content: flex-start;
+            text-align: right;
+        }
+        
+        .document-info p::after {
+            content: "...........................";
+            margin-right: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .employee-info {
+            margin: 20px 0;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: right;
+        }
+        
+        .title {
+            text-align: center;
+            margin: 70px 0;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .subject {
+            text-align: left;
+            margin: 0px 0;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .content {
+            text-align: right;
+            margin: 20px 0;
+            line-height: 2;
+        }
+        
+        .content p {
+            margin: 15px 0;
+            text-align: right;
+        }
+        
+        .respect {
+            text-align: center;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .signature-section {
+            margin-top: 40px;
+            text-align: left;
+        }
+        
+        .copies {
+            margin-top: 60px;
+            text-align: right;
+        }
+        
+        .copies p {
+            margin: 5px 0;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .print-button:hover {
+            background: #0056b3;
+        }
+        
+        @media print {
+            body {
+                margin: 0;
+                padding: 15px;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button no-print" onclick="window.print()">طباعة</button>
+    
+    <!-- Document info at top right -->
+    <div class="header">
+        <div class="header-text">
+            <p>المملكة الأردنية الهاشمية</p>
+            <img src="{{ url_for('static', filename='images/jordan_coat_of_arms.png') }}" alt="شعار المملكة الأردنية الهاشمية" style="height: 80px; margin: 5px 0;">
+            <p>مديرية التربية والتعليم لمنطقة الزرقاء الثانية</p>
+        </div>
+    </div>
+    <div class="document-info">
+        <p>الرقم ر/د</p>
+        <p>التاريخ</p>
+        <p>الموافق</p>
+    </div>
+    <div class="title">
+        <p>السيد/ {{ leave.employee.name }} ({{ leave.employee.ministry_number }})</p>
+        <p>مدير مدرسة {{ leave.school.name }} </p>
+    </div>
+    
+    <!-- Title centered -->
+    
+    
+    <!-- Subject on the left -->
+    <div class="subject">
+        <p>الموضوع : الإجازات العرضية براتب كامل مع العلاوات<br>
+        ( الفئة الأولى والثانية والثالثة )</p>
+    </div>
+    
+    <div class="content">
+        <p>السلام عليكم ورحمة الله وبركاته</p>
+        
+        <p>إشارة لكتابكم رقم ({{ leave.school_letter_number }}) تاريخ {{ leave.school_letter_date.strftime('%d/%m/%Y') }}م</p>
+        
+        <p>واستناداً لأحكام المادة رقم (53/ أ) من نظام إدارة الموارد البشرية في القطاع العام رقم (33) لسنة 2024م، والصلاحيات المفوضة الي بموجب كتاب عطوفة الأمين العام للشؤون الإدارية والمالية رقم (13669/1/70) تاريخ 16/3/2025م.</p>
+        
+        <p>قررت اعتبار تغيبك عن العمل يوم {{ leave.start_date.strftime('%d/%m/%Y') }}م
+        {% if leave.days_count > 1 %}
+        إلى يوم {{ leave.end_date.strftime('%d/%m/%Y') }}م
+        {% endif %}
+        إجازة عرضية براتب كامل مع العلاوات.</p>
+        
+        <p>وذلك بسبب وفقاً لـ: {{ leave.leave_reason }}</p>
+        
+        <p>مـع الـتـعـــازي. </p>
+    </div>
+    
+    <!-- Respect centered -->
+    <div class="respect">
+        <p>واقبلوا الاحترام،</p>
+    </div>
+    
+    <div class="signature-section">
+        <p style="text-align: left; margin-top: 30px; font-size: 16px; font-weight: bold; margin-bottom: 5px;">
+            مدير التربية والتعليم
+        </p>
+    </div>
+    
+    <div class="copies">
+        <p>نسخة مدير الشؤون الإدارية والمالية</p>
+        <p>نسخة / رئيس قسم شؤون الموظفين</p>
+        <p>نسخة / الديوان</p>
+    </div>
+</body>
+</html>
