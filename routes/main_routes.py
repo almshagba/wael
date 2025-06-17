@@ -9,7 +9,6 @@ from werkzeug.utils import secure_filename
 from constants import JOB_TITLES, DIRECTORATE_JOB_TITLES
 from routes.auth_routes import admin_required
 from io import BytesIO
-import pandas as pd
 from routes.auth_routes import login_required, permission_required
 from sqlalchemy import or_
 
